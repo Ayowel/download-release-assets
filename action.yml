@@ -1,0 +1,75 @@
+name: 'Get GitHub release assets'
+description: 'Download release assets both on gitHub and on-premise.'
+branding:
+  icon: download
+  color: purple
+
+inputs:
+  api-url:
+    description: "GitHub's API URL."
+    default: ${{ github.api_url }}
+  repository:
+    description: "Repository name with owner. For example, ayowel/get-assets-action."
+    default: ${{ github.repository }}
+  token:
+    description: "A GitHub token to use the GitHub API."
+    default: ${{ github.token }}
+  release:
+    description: "Release version to download, default to latest."
+    default: latest
+  asset:
+    description: "Asset file name. This can be a regex pattern."
+    required: true
+  output:
+    description: "Path and name of the downloaded asset."
+  require-release:
+    description: "Whether the step should fail if no release is found."
+    default: 'true'
+  require-asset:
+    description: "Whether the step should fail if no asset is found."
+    default: 'true'
+
+outputs:
+  found:
+    description: "Whether the asset was found."
+    value: ${{ fromJSON(steps.download.found || 'false') }}
+  found-release:
+    description: "Whether the release was found."
+    value: ${{ fromJSON(steps.download.found-release || 'false') }}
+  release-name:
+    description: "Title of the release."
+    value: ${{ steps.download.release-name }}
+  release-tag-name:
+    description: "Tag of the release."
+    value: ${{ steps.download.release-tag-name }}
+  release-id:
+    description: "ID of the release."
+    value: ${{ steps.download.release-id }}
+  asset-name:
+    description: "Name of the asset in the release."
+    value: ${{ steps.download.asset-name }}
+  asset-url:
+    description: "URL of the asset in the release."
+    value: ${{ steps.download.asset-url }}
+  asset-id:
+    description: "ID of the asset in the release."
+    value: ${{ steps.download.asset-id }}
+  asset-digest:
+    description: "Digest of the asset in the release."
+    value: ${{ steps.download.asset-digest }}
+
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/download.sh
+      id: download
+      env:
+        GITHUB_API_URL: ${{ inputs.api-url }}
+        GITHUB_REPOSITORY: ${{ inputs.repository }}
+        GITHUB_TOKEN: ${{ inputs.token }}
+        TARGET_MATCH: ${{ inputs.asset }}
+        TARGET_RELEASE: ${{ inputs.release }}
+        SAVE_NAME: ${{ inputs.output }}
+        FAIL_IF_NO_ASSET: ${{ inputs.require-asset }}
+        FAIL_IF_NO_RELEASE: ${{ inputs.require-release }}
+      shell: bash
