@@ -32,31 +32,31 @@ inputs:
 outputs:
   found:
     description: "Whether the asset was found."
-    value: ${{ fromJSON(steps.download.found || 'false') }}
+    value: ${{ fromJSON(steps.download.outputs.found || 'false') }}
   found-release:
     description: "Whether the release was found."
-    value: ${{ fromJSON(steps.download.found-release || 'false') }}
+    value: ${{ fromJSON(steps.download.outputs.found-release || 'false') }}
   release-name:
     description: "Title of the release."
-    value: ${{ steps.download.release-name }}
+    value: ${{ steps.download.outputs.release-name }}
   release-tag-name:
     description: "Tag of the release."
-    value: ${{ steps.download.release-tag-name }}
+    value: ${{ steps.download.outputs.release-tag-name }}
   release-id:
     description: "ID of the release."
-    value: ${{ steps.download.release-id }}
+    value: ${{ steps.download.outputs.release-id }}
   asset-name:
     description: "Name of the asset in the release."
-    value: ${{ steps.download.asset-name }}
+    value: ${{ steps.download.outputs.asset-name }}
   asset-url:
     description: "URL of the asset in the release."
-    value: ${{ steps.download.asset-url }}
+    value: ${{ steps.download.outputs.asset-url }}
   asset-id:
     description: "ID of the asset in the release."
-    value: ${{ steps.download.asset-id }}
+    value: ${{ steps.download.outputs.asset-id }}
   asset-digest:
     description: "Digest of the asset in the release."
-    value: ${{ steps.download.asset-digest }}
+    value: ${{ steps.download.outputs.asset-digest }}
 
 runs:
   using: "composite"
