@@ -50,7 +50,7 @@ fi
 jq <<<"$release_info"
 echo "found-release=true" >>"$GITHUB_OUTPUT"
 for l in name tag_name id; do
-  echo "release-${l//_/-}=\"$(<<<"$release_info" jq -r ".${l}")\"" >>"$GITHUB_OUTPUT"
+  echo "release-${l//_/-}=$(<<<"$release_info" jq -r ".${l}")" >>"$GITHUB_OUTPUT"
 done
 
 # Search desired asset
@@ -65,7 +65,7 @@ fi
 
 # Extract asset info as output
 for l in name url id digest; do
-  echo "asset-${l//_/-}='$(<<<"$asset_info" jq -r ".${l}")'" >>"$GITHUB_OUTPUT"
+  echo "asset-${l//_/-}=$(<<<"$asset_info" jq -r ".${l}")" >>"$GITHUB_OUTPUT"
 done
 
 # Download asset file
