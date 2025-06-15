@@ -8,7 +8,7 @@ Download asset from the latest release:
 
 ```yaml
 - name: Get the latest release's archive
-  uses: ayowel/get-assets-action@v1
+  uses: ayowel/download-release-assets@v1
   with:
     asset: release-archive.zip
 ```
@@ -16,7 +16,7 @@ Download asset from the latest release:
 Download asset from a specific release to a different file:
 
 ```yaml
-- uses: ayowel/get-assets-action@v1
+- uses: ayowel/download-release-assets@v1
   with:
     release: v8.3.7
     repository: renpy/renpy
@@ -27,7 +27,7 @@ Download asset from a specific release to a different file:
 Download asset from a private repository using personal access token:
 
 ```yaml
-- uses: ayowel/get-assets-action@v1
+- uses: ayowel/download-release-assets@v1
   with:
     token: {{ secrets.GITHUB_PAT }}
     repository: renpy/renpy
@@ -38,7 +38,7 @@ Download asset from a private repository using personal access token:
 
 | Name | Required | Description | Default |
 | ---- | :-------: | ----------- | ------- |
-| **repository** |  | Repository name with owner, defaults to the current repository. For example, ayowel/get-assets-action. | `${{ github.repository }}` |
+| **repository** |  | Repository name with owner, defaults to the current repository. For example, ayowel/download-release-assets. | `${{ github.repository }}` |
 | **asset** | * | Asset file name. This can be a regex pattern. | `true` |
 | **output** |  | Path and name of the downloaded asset. If empty, defaults to the asset's name | `''` |
 | **token** |  | A GitHub token to use the GitHub API. | `${{ github.token }}` |
